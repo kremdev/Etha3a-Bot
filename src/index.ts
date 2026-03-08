@@ -4,14 +4,15 @@
  * MIT License
  */
 
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, Events, GatewayIntentBits, Partials } from 'discord.js';
 import 'dotenv/config';
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds],
+    intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
+    partials: Object.values(Partials) as Partials[],
 });
 
-client.once('ready', () => {
+client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user?.tag}`);
 });
 
