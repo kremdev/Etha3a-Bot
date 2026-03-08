@@ -1,0 +1,5 @@
+/*
+ * Etha3a-Bot – Quran & Azkar Bot
+ * Copyright (c) 2026 {author}
+ * MIT License
+ */
