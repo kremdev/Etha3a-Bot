@@ -1,13 +1,15 @@
-import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
+import { Client, GatewayIntentBits, Partials } from "discord.js";
+import { readdirSync } from "node:fs";
 import "dotenv/config";
 
 const client = new Client({
-  intents: [Object.keys(GatewayIntentBits)],
-  partials: [Object.keys(Partials)],
+    intents: [Object.keys(GatewayIntentBits)],
+    partials: [Object.keys(Partials)],
 });
 
-client.once(Events.ClientReady, () => {
-  console.log(`Logged in as ${client.user?.tag}`);
+readdirSync("./handlers").forEach(async (file) => {
+    const module = await import(`../handlers/${file}`);
+    module.default(client);
 });
 
 client.login(process.env.TOKEN);
