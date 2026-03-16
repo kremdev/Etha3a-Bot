@@ -1,45 +1,25 @@
-import { Client, GatewayIntentBits, Partials } from "discord.js";
-import { readdirSync } from "node:fs";
-import "dotenv/config";
-import { getTilawah, searchReciter } from "./utils/api/reciters.js";
+// Load environment variables from a .env file
+require('dotenv/config');
 
+// Import necessary classes and enums from discord.js
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+
+// Import custom utility functions for handling events and errors
+const { handler, isError } = require('./utils/helpers.js');
+
+// Create a new Discord client instance
+// - intents: specifies which events the bot will receive
+// - partials: allows the bot to receive incomplete data for certain structures
 const client = new Client({
-    intents: [Object.keys(GatewayIntentBits)],
-    partials: [Object.keys(Partials)],
+    intents: [Object.keys(GatewayIntentBits)], // Subscribe to all available gateway intents
+    partials: [Object.keys(Partials)], // Enable all available partial structures
 });
 
-readdirSync("./handlers").forEach(async (file) => {
-    const module = await import(`../handlers/${file}`);
-    module.default(client);
-});
-
-client.on("ready", async () => {
-    const d = await getTilawah("المنشاوي", "الكوثر");
-    console.log(d);
-});
-/**
- * {
-  id: 112,
-  name: 'محمد صديق المنشاوي',
-  date: '2025-08-30T21:47:54.000000Z',
-  moshaf: [
-    {
-      id: 114,
-      name: 'المصحف المعلم - المصحف المعلم',
-      server: 'https://server10.mp3quran.net/minsh/Almusshaf-Al-Mo-lim/'
-    },
-    {
-      id: 113,
-      name: 'المصحف المجود - المصحف المجود',
-      server: 'https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad/'
-    },
-    {
-      id: 112,
-      name: 'حفص عن عاصم - مرتل',
-      server: 'https://server10.mp3quran.net/minsh/'
-    }
-  ],
-  apiName: 'mp3quran.net'
-}
- */
+// Log in the bot using the token stored in environment variables
 client.login(process.env.TOKEN);
+
+// Attach the event handler logic from helpers.js
+handler(client);
+
+// Set up error handling for the client
+isError(client);

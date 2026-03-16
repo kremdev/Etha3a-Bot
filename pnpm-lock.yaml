@@ -11,9 +11,6 @@ importers:
       '@discordjs/voice':
         specifier: ^0.19.1
         version: 0.19.1(ffmpeg-static@5.3.0)
-      chalk:
-        specifier: ^5.6.2
-        version: 5.6.2
       cli-table3:
         specifier: ^0.6.5
         version: 0.6.5
@@ -213,10 +210,6 @@ packages:
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
-
-  chalk@5.6.2:
-    resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   cli-table3@0.6.5:
     resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
@@ -557,8 +550,6 @@ snapshots:
   buffer-from@1.1.2: {}
 
   caseless@0.12.0: {}
-
-  chalk@5.6.2: {}
 
   cli-table3@0.6.5:
     dependencies:
