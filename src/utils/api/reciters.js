@@ -69,6 +69,15 @@ export async function getTilawah(name, surah) {
         );
 
         const audio = await audioData.json();
-        return audio.data?.audio ?? null;
+
+        return {
+            audio: audio.data?.audio ?? null,
+            reciter: reciterData.name,
+            surah: {
+                name: surahData.name,
+                number: surahData.id,
+                makkia: surahData.makkia ? "مكية" : "مدنية",
+            },
+        };
     }
 }

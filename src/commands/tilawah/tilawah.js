@@ -14,8 +14,8 @@ import {
     searchReciter,
     searchSurah,
     getTilawah,
-} from "../../funcs/api/reciters.js";
-import { GuildPlayer } from "../../funcs/player/GuildPlayer.js";
+} from "../../utils/api/reciters.js";
+import { GuildPlayer } from "../../utils/class/GuildPlayer.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -49,15 +49,22 @@ export default {
                 });
             }
 
-            const audio = await getTilawah(reciterName, surahName);
-            if (!audio) {
+            const data = await getTilawah(reciterName, surahName);
+            if (!data) {
                 return interaction.editReply({
                     content: "❌ No audio found for this reciter and surah.",
                 });
             }
 
+            const {
+                audio,
+                reciter,
+                surah: { name, number, makkia },
+            } = data;
+
             const guildPlayer = new GuildPlayer();
             await guildPlayer.play({
+                userID: interaction.user.id,
                 guild: interaction.guild,
                 channel,
                 audio,
@@ -66,9 +73,7 @@ export default {
             const container = new ContainerBuilder()
                 .setAccentColor(0x57f287)
                 .addTextDisplayComponents(
-                    new TextDisplayBuilder().setContent(
-                        "# تلاوة قرآنية ",
-                    ),
+                    new TextDisplayBuilder().setContent("# تلاوة قرآنية "),
                 )
                 .addSeparatorComponents(
                     new SeparatorBuilder()
@@ -77,7 +82,7 @@ export default {
                 )
                 .addTextDisplayComponents(
                     new TextDisplayBuilder().setContent(
-                        `> 👤 **القارئ**\n> ${reciterName}\n\n> 📖 **السورة**\n> ${surahName}`,
+                        `> 👤 **القارئ**\n> ${reciter}\n\n> 📖 **السورة**\n> ${name}\nرقم السورة: ${number}\n النزول: ${makkia}`,
                     ),
                 )
                 .addSeparatorComponents(

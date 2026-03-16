@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { players } from "../funcs/player/GuildPlayer.js";
+import { players } from "../utils/class/GuildPlayer.js";
 
 export default {
     name: Events.InteractionCreate,
@@ -15,6 +15,7 @@ export default {
         if (interaction.isButton()) {
             await interaction.deferUpdate().catch(() => null);
             const guildPlayer = players.get(interaction.guildId);
+
             if (!guildPlayer) {
                 return interaction.followUp({
                     content: "لا يوجد تلاوة قيد التشغيل ❌",
@@ -22,6 +23,7 @@ export default {
                 });
             }
 
+            console.log(guildPlayer);
             switch (interaction.customId) {
                 case "tilawah_pause":
                     guildPlayer.pause();

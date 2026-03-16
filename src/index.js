@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { readdirSync } from "node:fs";
 import "dotenv/config";
-import { getTilawah, searchReciter } from "./funcs/api/reciters.js";
+import { getTilawah, searchReciter } from "./utils/api/reciters.js";
 
 const client = new Client({
     intents: [Object.keys(GatewayIntentBits)],
